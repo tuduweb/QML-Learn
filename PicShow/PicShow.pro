@@ -1,6 +1,6 @@
-QT += quick
+QT += quick gui core
 
-CONFIG += c++11 console
+CONFIG += c++19 console
 # 加上console 以后 console信息会单列成cmd
 
 # The following define makes your compiler emit warnings if you use
@@ -15,6 +15,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        GrayImgProc.cpp \
+        ImgProc/imgproc.cpp \
+        ImgProcAbstract.cpp \
+        ImgProcess.cpp \
+        PicShowPanel.cpp \
+        PixelTipsLayer.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -29,3 +35,12 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    GrayImgProc.h \
+    ImgProc/common.h \
+    ImgProc/imgproc.h \
+    ImgProcAbstract.h \
+    ImgProcess.h \
+    PicShowPanel.h \
+    PixelTipsLayer.h
