@@ -5,9 +5,13 @@
 PicShowPaintedItem::PicShowPaintedItem(QQuickItem *parent)
     :QQuickPaintedItem(parent)
 {
+    //PixelTips,TextTips是跟PicShow绑定的..
+    //一个PicShow一般是对应一套Pixel,Text的才行!?
     layer = new PixelTipsLayer(this);
     layers.append(layer);
 
+    //这里是一个处理类..里面实现了具体的处理方法..
+    //比如一个处理类放在一个线程里
     imgProc = new ImgProcess(this);
 
 }
@@ -74,17 +78,17 @@ void PicShowPaintedItem::paint(QPainter *painter)
     QPen pen(myColor,2);
     painter->setPen(pen);
     painter->setRenderHints(QPainter::Antialiasing, true);
-    painter->drawPie(boundingRect().adjusted(1, 1, -1, -1), 90 * 16, 290 * 16);
 
-    QRect pixmapRect   =   QRect(0,0,this->width(),this->height());
+    //painter->drawPie(boundingRect().adjusted(1, 1, -1, -1), 90 * 16, 290 * 16);
 
-    qDebug() << "draw";
+    QRect pixmapRect   =   QRect(0,0,this->width(),this->height());//渲染窗(等于截取)
 
     QFileInfo fileInfo(myUri.replace("file:///",""));
 
-    qDebug() << fileInfo << fileInfo.isFile();
-
     QImage img = QImage(myUri);
+
+    painter->scale(width() / img.width(), height() / img.height());
+
 
     qDebug() << width() << height() << img.width() << img.height();
 
@@ -94,11 +98,11 @@ void PicShowPaintedItem::paint(QPainter *painter)
 
     if(fileInfo.isFile())
     {
-        qDebug() << "drawNow";
         //painter->drawPixmap(0,0,this->width(),this->height(),QPixmap(myUri));
-        painter->drawImage(pixmapRect,img,pixmapRect);
-        qDebug() << img;
+        painter->drawImage(pixmapRect, img, pixmapRect);
+        // qDebug() << img;
         //painter->drawImage(0,0,layer->image,200,200);
-        painter->drawImage(pixmapRect,layer->image,pixmapRect);
+        painter->drawImage(pixmapRect, layer->image, pixmapRect);
+
     }
 }

@@ -5,14 +5,16 @@
 
 #include "QDebug"
 
-/*
- * 输入“图像数据”
- * 输出“信息”
-*/
+#define IMGPROC_PREFIX ImgProcess::
 
-ImgProcess::ImgProcess(QObject *parent) : QObject(parent)
+
+IMGPROC_PREFIX ImgProcess(QObject *parent) : QObject(parent)
 {
+    //这里是申明具体处理的实现
     procList.append(new GrayImgProc(188,120,this));
+
+
+    //具体的实现需要有调用PixelTips,TextTips的方法.
 
     QImage image;
 
@@ -20,7 +22,7 @@ ImgProcess::ImgProcess(QObject *parent) : QObject(parent)
 
 }
 
-bool ImgProcess::CheckDataInfo(QImage &imageData)
+bool IMGPROC_PREFIX CheckDataInfo(QImage &imageData)
 {
     for(auto proc : procList)
     {

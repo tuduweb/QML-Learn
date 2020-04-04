@@ -46,27 +46,94 @@ ApplicationWindow {
                     text: "indexPicShow"
                 }
 
-                PicShow{
-                    id: picShowPanel
+
+                RowLayout{
                     anchors.centerIn: parent
-                    width: 400; height: 300
-                    name: "A simple pie chart"
-                    //这里自动转换为C++中的QColor类型
-                    color: "red"
-                    uri: "F:/qt/road/podao1.bmp"
+                    height: parent.height
+                    width: parent.width
+                    //Layout.fillWidth: true
+                    //Layout.fillHeight: true
 
-                    onColorChanged: {
+
+                    PicShow{
+                        id: picShowPanel
+                        //anchors.centerIn: parent
+
+                        //Layout.fillHeight: true
+
+                        width: 188*3; height: 120*3
+                        name: "A simple pie chart"
+                        //这里自动转换为C++中的QColor类型
+                        color: "red"
+                        uri: "F:/qt/road/podao1.bmp"
+
+                        onColorChanged: {
+
+                        }
+
+                        Text{
+                            anchors.centerIn: parent
+                            font.pixelSize: 24
+                            color: "#FFF"
+                            text: "DDD"
+                        }
+
+
+                        Rectangle{//模拟线段
+                            id: picShowPosY
+                            //anchors.centerIn: parent
+                            width:parent.width //长
+                            height:1  //高
+                            color:"red" //颜色
+                            //rotation:45 //顺时针旋转的角度
+                        }
+
+                        Rectangle{//模拟线段
+                            id: picShowPosX
+                            //anchors.centerIn: parent
+                            width: 1
+                            height:parent.height //长
+                            color:"red" //颜色
+                            //rotation:45 //顺时针旋转的角度
+                        }
+
+                        MouseArea{
+                            anchors.fill: parent
+                            onPositionChanged: {
+                                var x = mouse.x,y = mouse.y;
+                                if(mouse.x > parent.width) x = parent.width;
+                                if(mouse.x < 0) x = 0;
+                                if(mouse.y > parent.height) y = parent.height;
+                                if(mouse.y < 0) y = 0;
+
+
+                                console.log("x:" + mouse.x + " y:" + mouse.y )
+                                debugTextArea.text = "x:" + mouse.x + " y:" + mouse.y
+                                picShowPosX.x = x
+                                picShowPosY.y = y
+                            }
+                        }
+
+
+
+
 
                     }
 
-                    Text{
-                        anchors.centerIn: parent
-                        font.pixelSize: 24
-                        color: "#FFF"
-                        text: "DDD"
+                    TextArea{
+                        id: debugTextArea
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        text: "testMyArea"
                     }
+
+
+
 
                 }
+
+
+
 
                 Behavior on color {
                     ColorAnimation {
@@ -124,7 +191,7 @@ ApplicationWindow {
                 id : recRep
                 model: 20
                 Rectangle{
-                    id: item
+                    id: items
                     width: 400
                     height: 200
                     //Layout.fillHeight: true
@@ -149,7 +216,7 @@ ApplicationWindow {
                         Drag.active: mouseArea.drag.active
                         Drag.hotSpot.x: 10//热点位置
                         Drag.hotSpot.y: 10
-                        Drag.mimeData: { "text/plain": item.color }//设置拖拽时内部数据,也就是拖拽出的数据类型
+                        Drag.mimeData: { "text/plain": items.color }//设置拖拽时内部数据,也就是拖拽出的数据类型
                         Drag.dragType: Drag.Automatic//拖拽类型
                         Drag.onDragStarted: {//拖拽开始
                             parent.border.width = 5

@@ -1,12 +1,11 @@
 #include "imgproc.h"
-
 #include <QDebug>
 
 #define printf(msg) qDebug(msg)
 
 
 //数据源 宽 高
-BYTE FastOSTU(const BYTE* dataPtr, int width, int height)
+BYTE _FastOSTU(const BYTE* dataPtr, int width, int height)
 {
 
     #define GrayScale 256
@@ -76,7 +75,7 @@ BYTE FastOSTU(const BYTE* dataPtr, int width, int height)
 
 
 void ImgProc(uint8_t* data){
-    qDebug("ImgProc....OSTU %d",FastOSTU(data,188,120));
+    qDebug("ImgProc....OSTU %d",_FastOSTU(data,188,120));
     //printf("ImgProc...............OSTU %d");
 }
 

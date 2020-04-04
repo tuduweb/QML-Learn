@@ -1,6 +1,6 @@
 QT += quick gui core
 
-CONFIG += c++19 console
+CONFIG += c++11 console
 # 加上console 以后 console信息会单列成cmd
 
 # The following define makes your compiler emit warnings if you use
@@ -44,3 +44,6 @@ HEADERS += \
     ImgProcess.h \
     PicShowPanel.h \
     PixelTipsLayer.h
+
+# disable C4819 warning
+QMAKE_CXXFLAGS_WARN_ON += -wd4819
